@@ -13,3 +13,6 @@ export * from './estadio.controller';
 export * from './jugador.controller';
 export * from './torneo.controller';
 export * from './transporte.controller';
+export * from './director-tecnico-equipo.controller';
+export * from './equipo-director-tecnico.controller';
+export * from './director-tecnico.controller';
