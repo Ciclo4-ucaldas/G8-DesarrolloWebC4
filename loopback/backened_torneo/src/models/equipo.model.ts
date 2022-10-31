@@ -20,6 +20,14 @@ export class Equipo extends Entity {
     type: 'string',
     required: true,
   })
+
+  Nit: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+
   NumeroJugadores: string;
 
   @property({

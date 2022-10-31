@@ -43,12 +43,7 @@ export class DirectorTecnico extends Entity {
     type: 'string',
     required: true,
   })
-  Nit: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
+  
   Categoria: string;
 
   @property({
