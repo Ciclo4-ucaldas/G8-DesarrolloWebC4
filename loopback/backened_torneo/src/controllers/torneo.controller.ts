@@ -1,3 +1,4 @@
+import { authenticate } from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -20,12 +21,14 @@ import {
 import {Torneo} from '../models';
 import {TorneoRepository} from '../repositories';
 
+@authenticate("admin")
 export class TorneoController {
   constructor(
     @repository(TorneoRepository)
     public torneoRepository : TorneoRepository,
   ) {}
 
+ 
   @post('/torneos')
   @response(200, {
     description: 'Torneo model instance',
