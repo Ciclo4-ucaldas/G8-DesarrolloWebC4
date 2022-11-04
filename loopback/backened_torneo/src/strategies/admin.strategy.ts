@@ -7,7 +7,7 @@ import { AutentificacionService } from "../services";
 
 
 export class EstrategiaAdministrador implements AuthenticationStrategy{
-    name: string = 'admin'
+    name: string = 'tecnico'
 
 
 constructor(

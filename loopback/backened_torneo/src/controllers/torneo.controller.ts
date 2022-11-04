@@ -21,7 +21,7 @@ import {
 import {Torneo} from '../models';
 import {TorneoRepository} from '../repositories';
 
-@authenticate("admin")
+@authenticate("tecnico")
 export class TorneoController {
   constructor(
     @repository(TorneoRepository)
