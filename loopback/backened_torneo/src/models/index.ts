@@ -5,3 +5,5 @@ export * from './alojamiento.model';
 export * from './transporte.model';
 export * from './equipo.model';
 export * from './jugador.model';
+export * from './director-tecnico.model';
+export * from './credenciales.model';

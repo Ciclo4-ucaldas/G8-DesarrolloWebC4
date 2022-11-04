@@ -5,3 +5,4 @@ export * from './estadio.repository';
 export * from './jugador.repository';
 export * from './torneo.repository';
 export * from './transporte.repository';
+export * from './director-tecnico.repository';

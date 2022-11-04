@@ -1,5 +1,6 @@
 import {Entity, model, property, hasMany} from '@loopback/repository';
 import {Equipo} from './equipo.model';
+import {DirectorTecnico} from './director-tecnico.model';
 
 @model()
 export class Torneo extends Entity {
@@ -15,6 +16,12 @@ export class Torneo extends Entity {
     required: true,
   })
   Pais: string;
+  
+  @property({
+    type: 'string',
+    required: true,
+  })
+  Nit: string;
 
   @property({
     type: 'string',
@@ -40,6 +47,14 @@ export class Torneo extends Entity {
     type: 'string',
   })
   arbitroId?: string;
+
+  @property({
+    type: 'string',
+  })
+  directorTecnicoId?: string;
+
+  @hasMany(() => DirectorTecnico)
+  directorTecnicos: DirectorTecnico[];
 
   constructor(data?: Partial<Torneo>) {
     super(data);
