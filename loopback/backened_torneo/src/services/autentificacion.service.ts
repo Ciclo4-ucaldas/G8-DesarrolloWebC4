@@ -28,9 +28,9 @@ export class AutentificacionService {
   
   IdentificarDirectorTecnico(usuario: string, Clave: string){
     try{
-      let p = this.directorTecnicoRepository.findOne({where:{Correo: usuario, Clave: Clave}});
-       if(p){
-               return p;
+      let d = this.directorTecnicoRepository.findOne({where:{Correo: usuario, Clave: Clave}});
+       if(d){
+               return d;
            }
            return false;
   
@@ -58,7 +58,7 @@ export class AutentificacionService {
   
   ValidarTokenJWT(token: string){
     try{
-      let datos = jwt.veryfy(token, Llaves.claveJWT);
+      let datos = jwt.verify(token, Llaves.claveJWT);
       return datos;
   
     }catch{

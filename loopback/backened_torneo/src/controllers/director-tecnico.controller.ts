@@ -50,9 +50,10 @@ export class DirectorTecnicoController {
       let token = this.servicioAutenticacion.GenerarTokenJWT(d);
       return{
         datos:{
+          id: d.id,
           nombre: d.Nombres,
-          correo: d.Correo,
-          id: d.id
+          correo: d.Correo
+          
       },
       tk: token
     }

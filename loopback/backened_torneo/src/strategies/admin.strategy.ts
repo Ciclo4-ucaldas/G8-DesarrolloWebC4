@@ -22,7 +22,7 @@ constructor(
             let datos = this.servicioAutenticacion.ValidarTokenJWT(token);
             if(datos){
                 let perfil: UserProfile = Object.assign({
-                    nombre: datos.data.nombre
+                nombre: datos.data.Nombres
                 });
                 return perfil;
             }else{
