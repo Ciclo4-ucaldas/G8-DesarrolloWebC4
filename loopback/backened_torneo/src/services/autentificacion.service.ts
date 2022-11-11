@@ -35,7 +35,8 @@ export class AutentificacionService {
       data:{
       id: directorTecnico.id,
       Correo: directorTecnico.Correo,
-      nombre: directorTecnico.Nombres + " " + directorTecnico.Apellidos
+      nombre: directorTecnico.Nombres + " " + directorTecnico.Apellidos,
+      rol:directorTecnico.constructor.name
       // Categoria: directorTecnico.Categoria,
       // TipoDocumento : directorTecnico.TipoDocumento,
       // Documento: directorTecnico.Documento

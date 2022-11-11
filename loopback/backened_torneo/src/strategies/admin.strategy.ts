@@ -20,9 +20,10 @@ constructor(
         let token = parseBearerToken(request);
         if(token){
             let datos = this.servicioAutenticacion.ValidarTokenJWT(token);
-            if(datos){
+            if(datos.data.rol=="DirectorTecnico"){
                 let perfil: UserProfile = Object.assign({
-                nombre: datos.data.Nombres
+                nombre: datos.data.Nombres,
+                rol:datos.rol
                 });
                 return perfil;
             }else{
