@@ -84,7 +84,7 @@ export class DirectorTecnicoController {
       },
     })
     directorTecnico: Omit<DirectorTecnico, 'id'>,
-  ): Promise<DirectorTecnico> {
+  ): Promise<DirectorTecnico|any> {
 
     let clave = this.servicioNotificacion.generarClave();
     let claveCifrada = this.servicioNotificacion.cifrarClave(clave);
@@ -101,7 +101,6 @@ export class DirectorTecnicoController {
    }else{
      new HttpErrors[500]("no se pudo crear el usuario director tecnico")
    }
-
   }
 
   @get('/director-tecnicos/count')
