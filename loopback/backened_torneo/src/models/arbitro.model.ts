@@ -28,8 +28,10 @@ export class Arbitro extends Entity {
   })
   Telefono: string;
 
-  @hasMany(() => Torneo)
-  torneos: Torneo[];
+  @property({
+    type: 'string',
+  })
+  torneoId?: string;
 
   constructor(data?: Partial<Arbitro>) {
     super(data);
