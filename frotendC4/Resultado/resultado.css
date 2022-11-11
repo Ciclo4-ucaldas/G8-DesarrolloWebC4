@@ -1,0 +1,50 @@
+body{
+    padding: 0;
+    margin: 0;
+    background-color: rgb(9, 9, 55);
+    background-image: url("./imagen/jugador.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+a{
+    text-decoration: none;
+    font-size: 1.2rem;
+}
+
+nav a:hover{
+    color: blue;
+    cursor: pointer;
+}
+
+header{
+    display: flex;
+    min-height: 70px;
+    justify-content:center;
+    align-items: center;
+    padding: 2px;
+}
+
+
+nav a{
+    
+    font-weight: 600px;
+    padding-right: 54px;
+    color: aliceblue;
+}
+
+.Insignia{
+    display: flex;
+    align-items: center;
+    padding-right: 54px;
+    width: 78px;
+}
+
+.Insignia img{
+    height: 20px;
+    margin-right: 12px;
+}
+
+nav a:hover{
+    color: blue;
+}
