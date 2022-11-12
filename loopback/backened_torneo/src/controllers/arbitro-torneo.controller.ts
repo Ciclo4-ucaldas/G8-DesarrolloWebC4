@@ -61,10 +61,10 @@ export class ArbitroTorneoController {
           schema: getModelSchemaRef(Torneo, {
             title: 'NewTorneoInArbitro',
             exclude: ['id'],
-            optional: ['arbitroId']
+            optional: ['arbitro']
           }),
         },
-      },
+      }
     }) torneo: Omit<Torneo, 'id'>,
   ): Promise<Torneo> {
     return this.arbitroRepository.torneos(id).create(torneo);

@@ -53,7 +53,9 @@ export class Torneo extends Entity {
   directorTecnicos: DirectorTecnico[];
 
   @hasMany(() => Arbitro)
-  arbitros: Arbitro[];
+  arbitro: Arbitro[];
+
+  
 
   constructor(data?: Partial<Torneo>) {
     super(data);

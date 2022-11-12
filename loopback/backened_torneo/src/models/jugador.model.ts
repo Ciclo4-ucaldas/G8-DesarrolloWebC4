@@ -14,6 +14,24 @@ export class Jugador extends Entity {
     type: 'string',
     required: true,
   })
+  nombre: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  apellido: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  tipoDocumento: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
   Documento: string;
 
   @property({
