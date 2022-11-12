@@ -22,7 +22,7 @@ import {
 import { Llaves } from '../config/llaves';
 import {Credenciales, DirectorTecnico} from '../models';
 import {DirectorTecnicoRepository} from '../repositories';
-import { AutentificacionService } from '../services';
+import { AutentificacionService, NotificacionService } from '../services';
 const fetch = require('node-fetch');
 
 export class DirectorTecnicoController {
@@ -30,15 +30,17 @@ export class DirectorTecnicoController {
     @repository(DirectorTecnicoRepository)
     public directorTecnicoRepository : DirectorTecnicoRepository,
     @service(AutentificacionService)
-    public servicioAutenticacion: AutentificacionService
+    public servicioAutenticacion: AutentificacionService,
+    @service(NotificacionService)
+    public servicioNotificacion: NotificacionService
 
   ) {}
   @post('/IdentificarDirectorTecnico', {
     responses: {
       '200':{
       description: "Identificación de Usuarios"
-  
-     } 
+
+     }
     }
   })
   async IdentificarDirectorTecnico(
@@ -53,7 +55,7 @@ export class DirectorTecnicoController {
           id: d.id,
           nombre: d.Nombres,
           correo: d.Correo
-          
+
       },
       tk: token
     }
@@ -82,10 +84,10 @@ export class DirectorTecnicoController {
       },
     })
     directorTecnico: Omit<DirectorTecnico, 'id'>,
-  ): Promise<DirectorTecnico> {
+  ): Promise<DirectorTecnico|any> {
 
-    let clave = this.servicioAutenticacion.generarClave();
-    let claveCifrada = this.servicioAutenticacion.cifrarClave(clave);
+    let clave = this.servicioNotificacion.generarClave();
+    let claveCifrada = this.servicioNotificacion.cifrarClave(clave);
     directorTecnico.Clave = claveCifrada;
     let p = await this.directorTecnicoRepository.create(directorTecnico);
 
@@ -93,12 +95,12 @@ export class DirectorTecnicoController {
     const destino = directorTecnico.Correo;
     const asunto = 'Registro en la plataforma';
     const contenido = `Hola ${directorTecnico.Nombres}, su nombre de usuario es: ${directorTecnico.Correo} y su contraseña es: ${clave}`;
-    fetch( `${Llaves.urlServicioNotificaciones}/envio-correo?correo_destino= ${destino} &asunto= ${asunto} &contenido= ${contenido}`)
-    .then((data:any) => {
-      console.log(data);
-    })
+    let persona=this.servicioNotificacion.notificarEmail(destino,asunto,contenido)
+   if(persona){
     return p;
-
+   }else{
+     new HttpErrors[500]("no se pudo crear el usuario director tecnico")
+   }
   }
 
   @get('/director-tecnicos/count')
