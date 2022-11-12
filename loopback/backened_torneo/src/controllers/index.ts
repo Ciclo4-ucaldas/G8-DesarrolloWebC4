@@ -16,3 +16,4 @@ export * from './transporte.controller';
 export * from './director-tecnico-torneo.controller';
 export * from './torneo-director-tecnico.controller';
 export * from './director-tecnico.controller';
+export * from './torneo-arbitro.controller';
