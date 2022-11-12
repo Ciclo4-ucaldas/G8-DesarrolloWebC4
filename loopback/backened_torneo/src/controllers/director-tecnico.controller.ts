@@ -62,9 +62,6 @@ export class DirectorTecnicoController {
     }
   }
 
-
-
-
   @post('/director-tecnicos')
   @response(200, {
     description: 'DirectorTecnico model instance',
@@ -93,7 +90,7 @@ export class DirectorTecnicoController {
     const destino = directorTecnico.Correo;
     const asunto = 'Registro en la plataforma';
     const contenido = `Hola ${directorTecnico.Nombres}, su nombre de usuario es: ${directorTecnico.Correo} y su contraseña es: ${clave}`;
-    fetch( `${Llaves.urlServicioNotificaciones}/envio-correo?correo_destino= ${destino} &asunto= ${asunto} &contenido= ${contenido}`)
+    fetch(`${Llaves.urlServicioNotificaciones}/envio-correo?correo_destino=${destino}&asunto=${asunto}&contenido=${contenido}`)
     .then((data:any) => {
       console.log(data);
     })
