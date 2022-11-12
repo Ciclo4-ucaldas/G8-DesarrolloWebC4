@@ -92,11 +92,14 @@ export class DirectorTecnicoController {
     const destino = directorTecnico.Correo;
     const asunto = 'Registro en la plataforma';
     const contenido = `Hola ${directorTecnico.Nombres}, su nombre de usuario es: ${directorTecnico.Correo} y su contraseña es: ${clave}`;
+<<<<<<< HEAD
     fetch(`${Llaves.urlServicioNotificaciones}/envio-correo?correo_destino=${destino}&asunto=${asunto}&contenido=${contenido}`)
     .then((data:any) => {
       console.log(data);
     })
 
+=======
+>>>>>>> 030c8107d73bae3feef4e8a9965a0686dd7cdf77
     let persona=this.servicioNotificacion.notificarEmail(destino,asunto,contenido)
    if(persona){
     return p;
