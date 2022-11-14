@@ -7,21 +7,21 @@ import {
   getModelSchemaRef,
 } from '@loopback/rest';
 import {
-  Arbitro,
+  Equipo,
   Torneo,
 } from '../models';
-import {ArbitroRepository} from '../repositories';
+import {EquipoRepository} from '../repositories';
 
-export class ArbitroTorneoController {
+export class EquipoTorneoController {
   constructor(
-    @repository(ArbitroRepository)
-    public arbitroRepository: ArbitroRepository,
+    @repository(EquipoRepository)
+    public equipoRepository: EquipoRepository,
   ) { }
 
-  @get('/arbitros/{id}/torneo', {
+  @get('/equipos/{id}/torneo', {
     responses: {
       '200': {
-        description: 'Torneo belonging to Arbitro',
+        description: 'Torneo belonging to Equipo',
         content: {
           'application/json': {
             schema: {type: 'array', items: getModelSchemaRef(Torneo)},
@@ -31,8 +31,8 @@ export class ArbitroTorneoController {
     },
   })
   async getTorneo(
-    @param.path.string('id') id: typeof Arbitro.prototype.id,
+    @param.path.string('id') id: typeof Equipo.prototype.id,
   ): Promise<Torneo> {
-    return this.arbitroRepository.torneo(id);
+    return this.equipoRepository.torneo(id);
   }
 }

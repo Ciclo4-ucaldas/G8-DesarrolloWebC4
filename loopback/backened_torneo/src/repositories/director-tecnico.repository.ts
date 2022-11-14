@@ -1,22 +1,16 @@
-import {inject, Getter} from '@loopback/core';
-import {DefaultCrudRepository, repository, HasOneRepositoryFactory} from '@loopback/repository';
+import {inject} from '@loopback/core';
+import {DefaultCrudRepository} from '@loopback/repository';
 import {MongoDbDataSource} from '../datasources';
-import {DirectorTecnico, DirectorTecnicoRelations, Torneo} from '../models';
-import {TorneoRepository} from './torneo.repository';
+import {DirectorTecnico, DirectorTecnicoRelations} from '../models';
 
 export class DirectorTecnicoRepository extends DefaultCrudRepository<
   DirectorTecnico,
   typeof DirectorTecnico.prototype.id,
   DirectorTecnicoRelations
 > {
-
-  public readonly torneo: HasOneRepositoryFactory<Torneo, typeof DirectorTecnico.prototype.id>;
-
   constructor(
-    @inject('datasources.MongoDb') dataSource: MongoDbDataSource, @repository.getter('TorneoRepository') protected torneoRepositoryGetter: Getter<TorneoRepository>,
+    @inject('datasources.MongoDb') dataSource: MongoDbDataSource,
   ) {
     super(DirectorTecnico, dataSource);
-    this.torneo = this.createHasOneRepositoryFactoryFor('torneo', torneoRepositoryGetter);
-    this.registerInclusionResolver('torneo', this.torneo.inclusionResolver);
   }
 }

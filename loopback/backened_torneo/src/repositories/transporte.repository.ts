@@ -1,22 +1,16 @@
-import {inject, Getter} from '@loopback/core';
-import {DefaultCrudRepository, repository, HasOneRepositoryFactory} from '@loopback/repository';
+import {inject} from '@loopback/core';
+import {DefaultCrudRepository} from '@loopback/repository';
 import {MongoDbDataSource} from '../datasources';
-import {Transporte, TransporteRelations, Equipo} from '../models';
-import {EquipoRepository} from './equipo.repository';
+import {Transporte, TransporteRelations} from '../models';
 
 export class TransporteRepository extends DefaultCrudRepository<
   Transporte,
   typeof Transporte.prototype.id,
   TransporteRelations
 > {
-
-  public readonly equipo: HasOneRepositoryFactory<Equipo, typeof Transporte.prototype.id>;
-
   constructor(
-    @inject('datasources.MongoDb') dataSource: MongoDbDataSource, @repository.getter('EquipoRepository') protected equipoRepositoryGetter: Getter<EquipoRepository>,
+    @inject('datasources.MongoDb') dataSource: MongoDbDataSource,
   ) {
     super(Transporte, dataSource);
-    this.equipo = this.createHasOneRepositoryFactoryFor('equipo', equipoRepositoryGetter);
-    this.registerInclusionResolver('equipo', this.equipo.inclusionResolver);
   }
 }

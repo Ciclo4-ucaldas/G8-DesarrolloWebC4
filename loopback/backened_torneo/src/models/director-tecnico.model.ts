@@ -1,8 +1,9 @@
 import {Entity, model, property, hasOne} from '@loopback/repository';
+import { InicioSession } from './inicio-session.model';
 import {Torneo} from './torneo.model';
 
 @model()
-export class DirectorTecnico extends Entity {
+export class DirectorTecnico extends InicioSession {
   @property({
     type: 'string',
     id: true,
@@ -58,14 +59,6 @@ export class DirectorTecnico extends Entity {
     required: true,
   })
   Telefono: string;
-
-  @hasOne(() => Torneo)
-  torneo: Torneo;
-
-  @property({
-    type: 'string',
-  })
-  torneoId?: string;
 
   constructor(data?: Partial<DirectorTecnico>) {
     super(data);

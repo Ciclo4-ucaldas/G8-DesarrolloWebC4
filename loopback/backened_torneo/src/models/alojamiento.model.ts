@@ -27,10 +27,7 @@ export class Alojamiento extends Entity {
     required: true,
   })
   NumerodeHabitaciones: string;
-
-  @hasMany(() => Equipo)
-  equipos: Equipo[];
-
+  
   constructor(data?: Partial<Alojamiento>) {
     super(data);
   }

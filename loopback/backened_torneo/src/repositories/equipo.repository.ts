@@ -1,8 +1,8 @@
 import {inject, Getter} from '@loopback/core';
-import {DefaultCrudRepository, repository, HasManyRepositoryFactory} from '@loopback/repository';
+import {DefaultCrudRepository, repository, BelongsToAccessor} from '@loopback/repository';
 import {MongoDbDataSource} from '../datasources';
-import {Equipo, EquipoRelations, Jugador} from '../models';
-import {JugadorRepository} from './jugador.repository';
+import {Equipo, EquipoRelations, Torneo} from '../models';
+import {TorneoRepository} from './torneo.repository';
 
 export class EquipoRepository extends DefaultCrudRepository<
   Equipo,
@@ -10,13 +10,13 @@ export class EquipoRepository extends DefaultCrudRepository<
   EquipoRelations
 > {
 
-  public readonly jugadors: HasManyRepositoryFactory<Jugador, typeof Equipo.prototype.id>;
+  public readonly torneo: BelongsToAccessor<Torneo, typeof Equipo.prototype.id>;
 
   constructor(
-    @inject('datasources.MongoDb') dataSource: MongoDbDataSource, @repository.getter('JugadorRepository') protected jugadorRepositoryGetter: Getter<JugadorRepository>,
+    @inject('datasources.MongoDb') dataSource: MongoDbDataSource, @repository.getter('TorneoRepository') protected torneoRepositoryGetter: Getter<TorneoRepository>,
   ) {
     super(Equipo, dataSource);
-    this.jugadors = this.createHasManyRepositoryFactoryFor('jugadors', jugadorRepositoryGetter,);
-    this.registerInclusionResolver('jugadors', this.jugadors.inclusionResolver);
+    this.torneo = this.createBelongsToAccessorFor('torneo', torneoRepositoryGetter,);
+    this.registerInclusionResolver('torneo', this.torneo.inclusionResolver);
   }
 }
