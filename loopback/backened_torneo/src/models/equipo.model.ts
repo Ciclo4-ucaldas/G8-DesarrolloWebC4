@@ -34,6 +34,11 @@ export class Equipo extends Entity {
   })
   Escudo: string;
 
+  @property({
+    type: 'string',
+  })
+  torneoId?: string;
+
   constructor(data?: Partial<Equipo>) {
     super(data);
   }
