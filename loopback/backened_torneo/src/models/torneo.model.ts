@@ -35,27 +35,6 @@ export class Torneo extends Entity {
   })
   NumerodeArbitros: string;
 
-  @hasMany(() => Equipo)
-  equipos: Equipo[];
-
-  @property({
-    type: 'string',
-  })
-  estadioId?: string;
-
-  @property({
-    type: 'string',
-  })
-  arbitroId?: string;
-
-  @property({
-    type: 'string',
-  })
-  directorTecnicoId?: string;
-
-  @hasMany(() => DirectorTecnico)
-  directorTecnicos: DirectorTecnico[];
-
   constructor(data?: Partial<Torneo>) {
     super(data);
   }

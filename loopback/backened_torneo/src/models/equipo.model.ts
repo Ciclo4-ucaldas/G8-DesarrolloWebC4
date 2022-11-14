@@ -34,24 +34,6 @@ export class Equipo extends Entity {
   })
   Escudo: string;
 
-  @hasMany(() => Jugador)
-  jugadors: Jugador[];
-
-  @property({
-    type: 'string',
-  })
-  transporteId?: string;
-
-  @property({
-    type: 'string',
-  })
-  alojamientoId?: string;
-
-  @property({
-    type: 'string',
-  })
-  torneoId?: string;
-
   constructor(data?: Partial<Equipo>) {
     super(data);
   }
