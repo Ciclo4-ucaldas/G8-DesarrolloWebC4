@@ -3103,28 +3103,6 @@
 							"subViews": [
 								{
 									"_type": "EdgeLabelView",
-									"_id": "AAAAAAGEZxwmRVcoCwU=",
-									"_parent": {
-										"$ref": "AAAAAAGEAg0DStKwxYQ="
-									},
-									"model": {
-										"$ref": "AAAAAAGEAg0DSdKtOKc="
-									},
-									"font": "Arial;13;0",
-									"left": 282,
-									"top": 460,
-									"width": 23.58154296875,
-									"height": 13,
-									"alpha": 0.5235987755982988,
-									"distance": 30,
-									"hostEdge": {
-										"$ref": "AAAAAAGEAg0DStKwxYQ="
-									},
-									"edgePosition": 2,
-									"text": "+.1*"
-								},
-								{
-									"_type": "EdgeLabelView",
 									"_id": "AAAAAAGEAg0DStKx1JU=",
 									"_parent": {
 										"$ref": "AAAAAAGEAg0DStKwxYQ="
@@ -3343,9 +3321,6 @@
 								"$ref": "AAAAAAGEAg0DStKzOa0="
 							},
 							"showEndOrder": "hide",
-							"tailRoleNameLabel": {
-								"$ref": "AAAAAAGEZxwmRVcoCwU="
-							},
 							"tailPropertyLabel": {
 								"$ref": "AAAAAAGEAg0DStK1rTM="
 							},
@@ -3771,7 +3746,7 @@
 									"font": "Arial;13;0",
 									"left": 769,
 									"top": 399,
-									"width": 6.5,
+									"width": 7.22998046875,
 									"height": 13,
 									"alpha": -0.5235987755982988,
 									"distance": 25,
@@ -3779,7 +3754,7 @@
 										"$ref": "AAAAAAGECu3lhJgz0Cg="
 									},
 									"edgePosition": 2,
-									"text": "*"
+									"text": "1"
 								},
 								{
 									"_type": "EdgeLabelView",
@@ -4047,7 +4022,7 @@
 									"font": "Arial;13;0",
 									"left": 760,
 									"top": 462,
-									"width": 6.5,
+									"width": 7.22998046875,
 									"height": 13,
 									"alpha": -0.5235987755982988,
 									"distance": 25,
@@ -4055,7 +4030,7 @@
 										"$ref": "AAAAAAGECu+CIr+4plM="
 									},
 									"edgePosition": 2,
-									"text": "*"
+									"text": "1"
 								},
 								{
 									"_type": "EdgeLabelView",
@@ -5608,7 +5583,7 @@
 								"reference": {
 									"$ref": "AAAAAAGD/M9DJ0+ldYg="
 								},
-								"multiplicity": "*"
+								"multiplicity": "1"
 							},
 							"end2": {
 								"_type": "UMLAssociationEnd",
@@ -5637,7 +5612,7 @@
 								"reference": {
 									"$ref": "AAAAAAGD/M9DJ0+ldYg="
 								},
-								"multiplicity": "*"
+								"multiplicity": "1"
 							},
 							"end2": {
 								"_type": "UMLAssociationEnd",

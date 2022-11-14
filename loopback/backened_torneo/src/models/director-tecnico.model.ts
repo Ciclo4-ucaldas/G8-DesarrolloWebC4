@@ -1,6 +1,7 @@
 import {Entity, model, property, hasOne} from '@loopback/repository';
 import { InicioSession } from './inicio-session.model';
 import {Torneo} from './torneo.model';
+import {Equipo} from './equipo.model';
 
 @model()
 export class DirectorTecnico extends InicioSession {
@@ -59,6 +60,9 @@ export class DirectorTecnico extends InicioSession {
     required: true,
   })
   Telefono: string;
+
+  @hasOne(() => Equipo)
+  equipo: Equipo;
 
   constructor(data?: Partial<DirectorTecnico>) {
     super(data);

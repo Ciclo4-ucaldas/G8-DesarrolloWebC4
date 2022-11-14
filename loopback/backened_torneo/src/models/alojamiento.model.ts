@@ -27,7 +27,12 @@ export class Alojamiento extends Entity {
     required: true,
   })
   NumerodeHabitaciones: string;
-  
+
+  @property({
+    type: 'string',
+  })
+  equipoId?: string;
+
   constructor(data?: Partial<Alojamiento>) {
     super(data);
   }
