@@ -6,3 +6,7 @@ export * from './torneo-estadio.controller';
 export * from './estadio.controller';
 export * from './arbitro.controller';
 export * from './torneo.controller';
+export * from './equipo-alojamiento.controller';
+export * from './equipo-transporte.controller';
+export * from './equipo-jugador.controller';
+export * from './director-tecnico-equipo.controller';

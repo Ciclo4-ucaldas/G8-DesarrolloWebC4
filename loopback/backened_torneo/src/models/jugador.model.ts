@@ -65,6 +65,11 @@ export class Jugador extends InicioSession {
   })
   Eps: string;
 
+  @property({
+    type: 'string',
+  })
+  equipoId?: string;
+
   constructor(data?: Partial<Jugador>) {
     super(data);
   }
