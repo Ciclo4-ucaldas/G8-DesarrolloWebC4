@@ -2,6 +2,7 @@ import {Entity, model, property, hasMany} from '@loopback/repository';
 import {Equipo} from './equipo.model';
 import {DirectorTecnico} from './director-tecnico.model';
 import {Arbitro} from './arbitro.model';
+import {Estadio} from './estadio.model';
 
 @model()
 export class Torneo extends Entity {
@@ -41,6 +42,9 @@ export class Torneo extends Entity {
 
   @hasMany(() => Equipo)
   equipos: Equipo[];
+
+  @hasMany(() => Estadio)
+  estadios: Estadio[];
 
   constructor(data?: Partial<Torneo>) {
     super(data);
