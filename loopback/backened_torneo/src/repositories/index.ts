@@ -1,6 +1,5 @@
 export * from './alojamiento.repository';
 export * from './arbitro.repository';
-export * from './credenciales.repository';
 export * from './director-tecnico.repository';
 export * from './equipo.repository';
 export * from './estadio.repository';
