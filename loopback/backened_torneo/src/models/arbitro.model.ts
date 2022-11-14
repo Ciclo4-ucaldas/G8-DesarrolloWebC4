@@ -35,10 +35,8 @@ export class Arbitro extends InicioSession {
   })
   Telefono: string;
 
-  @property({
-    type: 'string',
-  })
-  torneoId?: string;
+  @belongsTo(() => Torneo)
+  torneoId: string;
 
   constructor(data?: Partial<Arbitro>) {
     super(data);
