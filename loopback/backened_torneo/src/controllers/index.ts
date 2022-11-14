@@ -5,3 +5,4 @@ export * from './equipo-torneo.controller';
 export * from './torneo-estadio.controller';
 export * from './estadio.controller';
 export * from './arbitro.controller';
+export * from './torneo.controller';
