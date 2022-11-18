@@ -12,3 +12,5 @@ export * from './equipo-jugador.controller';
 export * from './director-tecnico-equipo.controller';
 export * from './equipo.controller';
 export * from './director-tecnico.controller';
+export * from './inicio-session.controller';
+export * from './jugador.controller';
