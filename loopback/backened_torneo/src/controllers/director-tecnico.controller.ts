@@ -4,27 +4,59 @@ import {
   Filter,
   FilterExcludingWhere,
   repository,
-  Where,
+  Where
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  HttpErrors,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
-  response,
+  response
 } from '@loopback/rest';
-import {DirectorTecnico} from '../models';
+import {Credenciales, DirectorTecnico} from '../models';
 import {DirectorTecnicoRepository} from '../repositories';
 
+
 export class DirectorTecnicoController {
+  servicioAutenticacion: any;
   constructor(
     @repository(DirectorTecnicoRepository)
-    public directorTecnicoRepository : DirectorTecnicoRepository,
-  ) {}
+    public directorTecnicoRepository: DirectorTecnicoRepository,
+  ) { }
+
+  @post('/tecnico', {
+    responses: {
+      '200': {
+        description: "Identificación de Técnico"
+
+      }
+    }
+  }
+  )
+  async identificarTecnico(
+    @requestBody() credenciales: Credenciales
+  ) {
+    let d = await this.servicioAutenticacion.IdentificarPersona(credenciales.usuario, credenciales.clave)
+    if (d) {
+      ;
+      let token = this.servicioAutenticacion.GenerarTokenJWT(d);
+      return {
+        datos: {
+          nombre: d.nombre,
+          correo: d.correo,
+          id: d.id
+        },
+        tk: token
+      }
+    } else {
+      throw new HttpErrors[401]("Datos invalidos");
+    }
+  }
 
   @post('/director-tecnicos')
   @response(200, {
@@ -44,7 +76,13 @@ export class DirectorTecnicoController {
     })
     directorTecnico: Omit<DirectorTecnico, 'id'>,
   ): Promise<DirectorTecnico> {
-    return this.directorTecnicoRepository.create(directorTecnico);
+
+    let clave = this.servicioAutenticacion.GenerarClave();
+    let claveCifrada = this.servicioAutenticacion.cifrarClave(clave);
+    directorTecnico.clave = claveCifrada;
+    let d = await this.directorTecnicoRepository.create(directorTecnico);
+    return d;
+
   }
 
   @get('/director-tecnicos/count')
@@ -148,3 +186,7 @@ export class DirectorTecnicoController {
     await this.directorTecnicoRepository.deleteById(id);
   }
 }
+function fetch(arg0: string) {
+  throw new Error('Function not implemented.');
+}
+
