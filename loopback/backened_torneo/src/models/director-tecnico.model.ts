@@ -34,13 +34,6 @@ export class DirectorTecnico extends InicioSession {
     type: 'string',
     required: false,
   })
-  Clave: string;
-
-
-  @property({
-    type: 'string',
-    required: false,
-  })
   Documento: string;
 
   @property({

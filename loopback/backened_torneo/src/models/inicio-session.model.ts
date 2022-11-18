@@ -17,7 +17,7 @@ export class InicioSession extends Entity {
 
   @property({
     type: 'string',
-    required: true,
+    required: false,
   })
   clave: string;
 

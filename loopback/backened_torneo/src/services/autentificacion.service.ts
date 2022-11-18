@@ -18,7 +18,7 @@ export class AutentificacionService {
 
   IdentificarDirectorTecnico(usuario: string, Clave: string){
     try{
-      let d = this.directorTecnicoRepository.findOne({where:{Correo: usuario, Clave: Clave}});
+      let d = this.directorTecnicoRepository.findOne({where:{Correo: usuario, clave: Clave}});
        if(d){
                return d;
            }

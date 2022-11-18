@@ -1,3 +1,4 @@
+import { authenticate } from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -25,7 +26,6 @@ export class DirectorTecnicoEquipoController {
   constructor(
     @repository(DirectorTecnicoRepository) protected directorTecnicoRepository: DirectorTecnicoRepository,
   ) { }
-
   @get('/director-tecnicos/{id}/equipo', {
     responses: {
       '200': {
