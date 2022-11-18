@@ -21,6 +21,18 @@ export class InicioSession extends Entity {
   })
   clave: string;
 
+  @property({
+    type: 'string',
+    required: true,
+  })
+  Nombres: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  Apellidos: string;
+
 
   constructor(data?: Partial<InicioSession>) {
     super(data);
