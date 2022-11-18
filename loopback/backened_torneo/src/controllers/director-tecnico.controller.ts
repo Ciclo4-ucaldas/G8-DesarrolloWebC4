@@ -1,3 +1,4 @@
+import {service} from '@loopback/core';
 import {
   Count,
   CountSchema,
@@ -9,53 +10,26 @@ import {
 import {
   del,
   get,
-  getModelSchemaRef,
-  HttpErrors,
-  param,
+  getModelSchemaRef, param,
   patch,
   post,
   put,
   requestBody,
   response
 } from '@loopback/rest';
-import {Credenciales, DirectorTecnico} from '../models';
+import {DirectorTecnico} from '../models';
 import {DirectorTecnicoRepository} from '../repositories';
+import {NotificacionService} from '../services';
 
 
 export class DirectorTecnicoController {
-  servicioAutenticacion: any;
+
   constructor(
     @repository(DirectorTecnicoRepository)
     public directorTecnicoRepository: DirectorTecnicoRepository,
-  ) { }
-
-  @post('/tecnico', {
-    responses: {
-      '200': {
-        description: "Identificación de Técnico"
-
-      }
-    }
-  }
-  )
-  async identificarTecnico(
-    @requestBody() credenciales: Credenciales
+    @service(NotificacionService)
+    public servicioNotificacion: NotificacionService
   ) {
-    let d = await this.servicioAutenticacion.IdentificarPersona(credenciales.usuario, credenciales.clave)
-    if (d) {
-      ;
-      let token = this.servicioAutenticacion.GenerarTokenJWT(d);
-      return {
-        datos: {
-          nombre: d.nombre,
-          correo: d.correo,
-          id: d.id
-        },
-        tk: token
-      }
-    } else {
-      throw new HttpErrors[401]("Datos invalidos");
-    }
   }
 
   @post('/director-tecnicos')
@@ -77,8 +51,8 @@ export class DirectorTecnicoController {
     directorTecnico: Omit<DirectorTecnico, 'id'>,
   ): Promise<DirectorTecnico> {
 
-    let clave = this.servicioAutenticacion.GenerarClave();
-    let claveCifrada = this.servicioAutenticacion.cifrarClave(clave);
+    let clave = this.servicioNotificacion.GenerarClave();
+    let claveCifrada = this.servicioNotificacion.cifrarClave(clave);
     directorTecnico.clave = claveCifrada;
     let d = await this.directorTecnicoRepository.create(directorTecnico);
     return d;
