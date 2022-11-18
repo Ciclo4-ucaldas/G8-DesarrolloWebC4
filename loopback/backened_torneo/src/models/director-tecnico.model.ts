@@ -1,7 +1,6 @@
-import {Entity, model, property, hasOne} from '@loopback/repository';
-import { InicioSession } from './inicio-session.model';
-import {Torneo} from './torneo.model';
+import {hasOne, model, property} from '@loopback/repository';
 import {Equipo} from './equipo.model';
+import {InicioSession} from './inicio-session.model';
 
 @model()
 export class DirectorTecnico extends InicioSession {
@@ -11,18 +10,6 @@ export class DirectorTecnico extends InicioSession {
     generated: true,
   })
   id?: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  Nombres: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  Apellidos: string;
 
   @property({
     type: 'string',

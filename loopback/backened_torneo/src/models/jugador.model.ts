@@ -1,6 +1,5 @@
-import {Entity, model, property, belongsTo} from '@loopback/repository';
-import {Equipo} from './equipo.model';
-import { InicioSession } from './inicio-session.model';
+import {model, property} from '@loopback/repository';
+import {InicioSession} from './inicio-session.model';
 
 @model()
 export class Jugador extends InicioSession {
@@ -10,18 +9,6 @@ export class Jugador extends InicioSession {
     generated: true,
   })
   id?: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  nombre: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  apellido: string;
 
   @property({
     type: 'string',

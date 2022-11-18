@@ -1,5 +1,5 @@
-import {Entity, model, property, hasMany, hasOne, belongsTo} from '@loopback/repository';
-import { InicioSession } from './inicio-session.model';
+import {belongsTo, model, property} from '@loopback/repository';
+import {InicioSession} from './inicio-session.model';
 import {Torneo} from './torneo.model';
 
 @model()
@@ -10,18 +10,6 @@ export class Arbitro extends InicioSession {
     generated: true,
   })
   id?: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  Nombre: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  apellido: string;
 
   @property({
     type: 'string',
