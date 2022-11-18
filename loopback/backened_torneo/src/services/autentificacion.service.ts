@@ -1,8 +1,8 @@
 import { /* inject, */ BindingScope, injectable} from '@loopback/core';
 import {repository} from '@loopback/repository';
 import {Llaves} from '../config/llaves';
-import {DirectorTecnico} from '../models';
-import {DirectorTecnicoRepository} from '../repositories';
+import {InicioSession} from '../models';
+import {ArbitroRepository, DirectorTecnicoRepository, JugadorRepository} from '../repositories';
 const jwt = require("jsonwebtoken");
 
 
@@ -11,30 +11,42 @@ const jwt = require("jsonwebtoken");
 export class AutentificacionService {
   constructor(
     @repository(DirectorTecnicoRepository)
-    public directorTecnicoRepository: DirectorTecnicoRepository
+    public directorTecnicoRepository: DirectorTecnicoRepository,
+    @repository(ArbitroRepository)
+    public arbitroRepository: ArbitroRepository,
+    @repository(JugadorRepository)
+    public jugadroRepository: JugadorRepository
+
   ) { }
 
-  IdentificarDirectorTecnico(usuario: string, Clave: string) {
+  async identificarPersona(usuario: string, Clave: string) {
     try {
-      let d = this.directorTecnicoRepository.findOne({where: {Correo: usuario, clave: Clave}});
-      if (d) {
-        return d;
+      let director = await this.directorTecnicoRepository.findOne({where: {usuario: usuario, clave: Clave}})
+      if (director) {
+        return director;
       }
-      return false;
+      let arbitro = await this.arbitroRepository.findOne({where: {usuario: usuario, clave: Clave}});
+      if (arbitro) {
+        return arbitro;
+      }
 
-    } catch {
+      let jugador = await this.jugadroRepository.findOne({where: {usuario: usuario, clave: Clave}});
+      if (jugador) {
+        return jugador;
+      }
 
-      return false;
+    } catch (error) {
+      console.log(error);
     }
   }
 
-  GenerarTokenJWT(directorTecnico: DirectorTecnico) {
+  GenerarTokenJWT(inicioSession: InicioSession, rol: String) {
     let token = jwt.sign({
       data: {
-        id: directorTecnico.id,
-        Correo: directorTecnico.Correo,
-        nombre: directorTecnico.Nombres + " " + directorTecnico.Apellidos,
-        rol: directorTecnico.constructor.name
+        id: inicioSession.id,
+        Correo: inicioSession.usuario,
+        //nombre: inicioSession.Nombres + " " + directorTecnico.Apellidos,
+        rol: rol
         // Categoria: directorTecnico.Categoria,
         // TipoDocumento : directorTecnico.TipoDocumento,
         // Documento: directorTecnico.Documento
