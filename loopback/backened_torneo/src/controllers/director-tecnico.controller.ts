@@ -8,17 +8,23 @@ import {
   Where
 } from '@loopback/repository';
 import {
-  del, get,
-  getModelSchemaRef, HttpErrors, param, patch, post, put, requestBody,
+  del,
+  get,
+  getModelSchemaRef, HttpErrors, param, patch, post, put, requestBody,  patch,
+  post,
+  put,
+  requestBody,
   response
 } from '@loopback/rest';
 import {Llaves} from '../config/llaves';
 import {Credenciales, DirectorTecnico} from '../models';
+import {DirectorTecnico} from '../models';
 import {DirectorTecnicoRepository} from '../repositories';
-import {AutentificacionService, NotificacionService} from '../services';
+import {NotificacionService} from '../services';
 const fetch = require('node-fetch');
 
 export class DirectorTecnicoController {
+
   constructor(
     @repository(DirectorTecnicoRepository)
     public directorTecnicoRepository: DirectorTecnicoRepository,
@@ -55,7 +61,8 @@ export class DirectorTecnicoController {
     } else {
       throw new HttpErrors[401]("Datos invalidos");
     }
-  }
+
+  
 
   @post('/director-tecnicos')
   @response(200, {
@@ -74,12 +81,16 @@ export class DirectorTecnicoController {
       },
     })
     directorTecnico: Omit<DirectorTecnico, 'id'>,
+
   ): Promise<DirectorTecnico | any> {
 
-    let clave = this.servicioNotificacion.generarClave();
+
+    let clave = this.servicioNotificacion.GenerarClave();
     let claveCifrada = this.servicioNotificacion.cifrarClave(clave);
-    directorTecnico.Clave = claveCifrada;
-    let p = await this.directorTecnicoRepository.create(directorTecnico);
+    directorTecnico.clave = claveCifrada;
+    let d = await this.directorTecnicoRepository.create(directorTecnico);
+    return d;
+
 
     //Notificar al usuario
     const destino = directorTecnico.Correo;
@@ -99,6 +110,7 @@ export class DirectorTecnicoController {
     } else {
       return new HttpErrors[400]("No se pudo mandar el correo al crear el Admin")
     }
+
   }
   @get('/director-tecnicos/count')
   @response(200, {
@@ -201,3 +213,7 @@ export class DirectorTecnicoController {
     await this.directorTecnicoRepository.deleteById(id);
   }
 }
+function fetch(arg0: string) {
+  throw new Error('Function not implemented.');
+}
+

@@ -5,13 +5,13 @@ const cryptoJS = require("crypto-js");
 const fetch = require('node-fetch');
 @injectable({scope: BindingScope.TRANSIENT})
 export class NotificacionService {
+
   envi(destino: string, asunto: string, contenido: string) {
     throw new Error('Method not implemented.');
   }
 
   constructor(/* Add @inject to inject parameters */) { }
-
-  generarClave() {
+  GenerarClave() {
     let clave = generador(8, false);
     return clave;
   }

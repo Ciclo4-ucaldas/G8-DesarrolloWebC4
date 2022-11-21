@@ -1,26 +1,15 @@
-import {Entity, model, property, hasMany, hasOne} from '@loopback/repository';
+import {belongsTo, model, property} from '@loopback/repository';
+import {InicioSession} from './inicio-session.model';
 import {Torneo} from './torneo.model';
 
 @model()
-export class Arbitro extends Entity {
+export class Arbitro extends InicioSession {
   @property({
     type: 'string',
     id: true,
     generated: true,
   })
   id?: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  Nombre: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  apellido: string;
 
   @property({
     type: 'string',
@@ -34,13 +23,8 @@ export class Arbitro extends Entity {
   })
   Telefono: string;
 
-  @property({
-    type: 'string',
-  })
-  torneoId?: string;
-
-  @hasOne(() => Torneo)
-  torneo: Torneo[];
+  @belongsTo(() => Torneo)
+  torneoId: string;
 
   constructor(data?: Partial<Arbitro>) {
     super(data);

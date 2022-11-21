@@ -22,8 +22,10 @@ export class Estadio extends Entity {
   })
   Capacidad: number;
 
-  @hasOne(() => Torneo)
-  torneo: Torneo;
+  @property({
+    type: 'string',
+  })
+  torneoId?: string;
 
   constructor(data?: Partial<Estadio>) {
     super(data);

@@ -1,8 +1,8 @@
-import {injectable, /* inject, */ BindingScope} from '@loopback/core';
-import { repository } from '@loopback/repository';
-import { DirectorTecnico } from '../models';
-import { DirectorTecnicoRepository } from '../repositories';
-import { Llaves } from '../config/llaves';
+import { /* inject, */ BindingScope, injectable} from '@loopback/core';
+import {repository} from '@loopback/repository';
+import {Llaves} from '../config/llaves';
+import {InicioSession} from '../models';
+import {ArbitroRepository, DirectorTecnicoRepository, JugadorRepository} from '../repositories';
 const jwt = require("jsonwebtoken");
 
 
@@ -11,50 +11,60 @@ const jwt = require("jsonwebtoken");
 export class AutentificacionService {
   constructor(
     @repository(DirectorTecnicoRepository)
-    public directorTecnicoRepository: DirectorTecnicoRepository
-  ){}
+    public directorTecnicoRepository: DirectorTecnicoRepository,
+    @repository(ArbitroRepository)
+    public arbitroRepository: ArbitroRepository,
+    @repository(JugadorRepository)
+    public jugadroRepository: JugadorRepository
 
+  ) { }
 
-
-  IdentificarDirectorTecnico(usuario: string, Clave: string){
-    try{
-      let d = this.directorTecnicoRepository.findOne({where:{Correo: usuario, Clave: Clave}});
-       if(d){
-               return d;
-           }
-           return false;
-
-       }catch{
-
-           return false;
-         }
+  async identificarPersona(usuario: string, Clave: string) {
+    try {
+      let director = await this.directorTecnicoRepository.findOne({where: {usuario: usuario, clave: Clave}})
+      if (director) {
+        return director;
+      }
+      let arbitro = await this.arbitroRepository.findOne({where: {usuario: usuario, clave: Clave}});
+      if (arbitro) {
+        return arbitro;
       }
 
-  GenerarTokenJWT(directorTecnico: DirectorTecnico){
-    let token = jwt.sign({
-      data:{
-      id: directorTecnico.id,
-      Correo: directorTecnico.Correo,
-      nombre: directorTecnico.Nombres + " " + directorTecnico.Apellidos,
-      rol:directorTecnico.constructor.name
-      // Categoria: directorTecnico.Categoria,
-      // TipoDocumento : directorTecnico.TipoDocumento,
-      // Documento: directorTecnico.Documento
-    }
+      let jugador = await this.jugadroRepository.findOne({where: {usuario: usuario, clave: Clave}});
+      if (jugador) {
+        return jugador;
+      }
 
-  },
-      Llaves.claveJWT);
-      return token;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  ValidarTokenJWT(token: string){
-    try{
+  GenerarTokenJWT(inicioSession: InicioSession, rol: String) {
+    let token = jwt.sign({
+      data: {
+        id: inicioSession.id,
+        Correo: inicioSession.usuario,
+        //nombre: inicioSession.Nombres + " " + directorTecnico.Apellidos,
+        rol: rol
+        // Categoria: directorTecnico.Categoria,
+        // TipoDocumento : directorTecnico.TipoDocumento,
+        // Documento: directorTecnico.Documento
+      }
+
+    },
+      Llaves.claveJWT);
+    return token;
+  }
+
+  ValidarTokenJWT(token: string) {
+    try {
       let datos = jwt.verify(token, Llaves.claveJWT);
       return datos;
 
-    }catch{
+    } catch {
       return false;
-   }
-}
+    }
+  }
 
 }

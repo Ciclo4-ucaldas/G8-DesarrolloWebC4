@@ -22,8 +22,10 @@ export class Transporte extends Entity {
   })
   Matricula: string;
 
-  @hasOne(() => Equipo)
-  equipo: Equipo;
+  @property({
+    type: 'string',
+  })
+  equipoId?: string;
 
   constructor(data?: Partial<Transporte>) {
     super(data);

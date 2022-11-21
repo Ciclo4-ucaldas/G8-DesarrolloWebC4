@@ -17,39 +17,39 @@ import {
 } from '@loopback/rest';
 import {
   Equipo,
-  Jugador,
+  Alojamiento,
 } from '../models';
 import {EquipoRepository} from '../repositories';
 
-export class EquipoJugadorController {
+export class EquipoAlojamientoController {
   constructor(
     @repository(EquipoRepository) protected equipoRepository: EquipoRepository,
   ) { }
 
-  @get('/equipos/{id}/jugador', {
+  @get('/equipos/{id}/alojamientos', {
     responses: {
       '200': {
-        description: 'Equipo has one Jugador',
+        description: 'Array of Equipo has many Alojamiento',
         content: {
           'application/json': {
-            schema: getModelSchemaRef(Jugador),
+            schema: {type: 'array', items: getModelSchemaRef(Alojamiento)},
           },
         },
       },
     },
   })
-  async get(
+  async find(
     @param.path.string('id') id: string,
-    @param.query.object('filter') filter?: Filter<Jugador>,
-  ): Promise<Jugador> {
-    return this.equipoRepository.jugador(id).get(filter);
+    @param.query.object('filter') filter?: Filter<Alojamiento>,
+  ): Promise<Alojamiento[]> {
+    return this.equipoRepository.alojamientos(id).find(filter);
   }
 
-  @post('/equipos/{id}/jugador', {
+  @post('/equipos/{id}/alojamientos', {
     responses: {
       '200': {
         description: 'Equipo model instance',
-        content: {'application/json': {schema: getModelSchemaRef(Jugador)}},
+        content: {'application/json': {schema: getModelSchemaRef(Alojamiento)}},
       },
     },
   })
@@ -58,22 +58,22 @@ export class EquipoJugadorController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Jugador, {
-            title: 'NewJugadorInEquipo',
+          schema: getModelSchemaRef(Alojamiento, {
+            title: 'NewAlojamientoInEquipo',
             exclude: ['id'],
             optional: ['equipoId']
           }),
         },
       },
-    }) jugador: Omit<Jugador, 'id'>,
-  ): Promise<Jugador> {
-    return this.equipoRepository.jugador(id).create(jugador);
+    }) alojamiento: Omit<Alojamiento, 'id'>,
+  ): Promise<Alojamiento> {
+    return this.equipoRepository.alojamientos(id).create(alojamiento);
   }
 
-  @patch('/equipos/{id}/jugador', {
+  @patch('/equipos/{id}/alojamientos', {
     responses: {
       '200': {
-        description: 'Equipo.Jugador PATCH success count',
+        description: 'Equipo.Alojamiento PATCH success count',
         content: {'application/json': {schema: CountSchema}},
       },
     },
@@ -83,28 +83,28 @@ export class EquipoJugadorController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Jugador, {partial: true}),
+          schema: getModelSchemaRef(Alojamiento, {partial: true}),
         },
       },
     })
-    jugador: Partial<Jugador>,
-    @param.query.object('where', getWhereSchemaFor(Jugador)) where?: Where<Jugador>,
+    alojamiento: Partial<Alojamiento>,
+    @param.query.object('where', getWhereSchemaFor(Alojamiento)) where?: Where<Alojamiento>,
   ): Promise<Count> {
-    return this.equipoRepository.jugador(id).patch(jugador, where);
+    return this.equipoRepository.alojamientos(id).patch(alojamiento, where);
   }
 
-  @del('/equipos/{id}/jugador', {
+  @del('/equipos/{id}/alojamientos', {
     responses: {
       '200': {
-        description: 'Equipo.Jugador DELETE success count',
+        description: 'Equipo.Alojamiento DELETE success count',
         content: {'application/json': {schema: CountSchema}},
       },
     },
   })
   async delete(
     @param.path.string('id') id: string,
-    @param.query.object('where', getWhereSchemaFor(Jugador)) where?: Where<Jugador>,
+    @param.query.object('where', getWhereSchemaFor(Alojamiento)) where?: Where<Alojamiento>,
   ): Promise<Count> {
-    return this.equipoRepository.jugador(id).delete(where);
+    return this.equipoRepository.alojamientos(id).delete(where);
   }
 }

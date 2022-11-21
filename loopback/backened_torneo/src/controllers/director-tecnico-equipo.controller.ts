@@ -1,3 +1,4 @@
+import { authenticate } from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -17,22 +18,21 @@ import {
 } from '@loopback/rest';
 import {
   DirectorTecnico,
-  Torneo,
+  Equipo,
 } from '../models';
 import {DirectorTecnicoRepository} from '../repositories';
 
-export class DirectorTecnicoTorneoController {
+export class DirectorTecnicoEquipoController {
   constructor(
     @repository(DirectorTecnicoRepository) protected directorTecnicoRepository: DirectorTecnicoRepository,
   ) { }
-
-  @get('/director-tecnicos/{id}/torneo', {
+  @get('/director-tecnicos/{id}/equipo', {
     responses: {
       '200': {
-        description: 'DirectorTecnico has one Torneo',
+        description: 'DirectorTecnico has one Equipo',
         content: {
           'application/json': {
-            schema: getModelSchemaRef(Torneo),
+            schema: getModelSchemaRef(Equipo),
           },
         },
       },
@@ -40,16 +40,16 @@ export class DirectorTecnicoTorneoController {
   })
   async get(
     @param.path.string('id') id: string,
-    @param.query.object('filter') filter?: Filter<Torneo>,
-  ): Promise<Torneo> {
-    return this.directorTecnicoRepository.torneo(id).get(filter);
+    @param.query.object('filter') filter?: Filter<Equipo>,
+  ): Promise<Equipo> {
+    return this.directorTecnicoRepository.equipo(id).get(filter);
   }
 
-  @post('/director-tecnicos/{id}/torneo', {
+  @post('/director-tecnicos/{id}/equipo', {
     responses: {
       '200': {
         description: 'DirectorTecnico model instance',
-        content: {'application/json': {schema: getModelSchemaRef(Torneo)}},
+        content: {'application/json': {schema: getModelSchemaRef(Equipo)}},
       },
     },
   })
@@ -58,22 +58,22 @@ export class DirectorTecnicoTorneoController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Torneo, {
-            title: 'NewTorneoInDirectorTecnico',
+          schema: getModelSchemaRef(Equipo, {
+            title: 'NewEquipoInDirectorTecnico',
             exclude: ['id'],
             optional: ['directorTecnicoId']
           }),
         },
       },
-    }) torneo: Omit<Torneo, 'id'>,
-  ): Promise<Torneo> {
-    return this.directorTecnicoRepository.torneo(id).create(torneo);
+    }) equipo: Omit<Equipo, 'id'>,
+  ): Promise<Equipo> {
+    return this.directorTecnicoRepository.equipo(id).create(equipo);
   }
 
-  @patch('/director-tecnicos/{id}/torneo', {
+  @patch('/director-tecnicos/{id}/equipo', {
     responses: {
       '200': {
-        description: 'DirectorTecnico.Torneo PATCH success count',
+        description: 'DirectorTecnico.Equipo PATCH success count',
         content: {'application/json': {schema: CountSchema}},
       },
     },
@@ -83,28 +83,28 @@ export class DirectorTecnicoTorneoController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Torneo, {partial: true}),
+          schema: getModelSchemaRef(Equipo, {partial: true}),
         },
       },
     })
-    torneo: Partial<Torneo>,
-    @param.query.object('where', getWhereSchemaFor(Torneo)) where?: Where<Torneo>,
+    equipo: Partial<Equipo>,
+    @param.query.object('where', getWhereSchemaFor(Equipo)) where?: Where<Equipo>,
   ): Promise<Count> {
-    return this.directorTecnicoRepository.torneo(id).patch(torneo, where);
+    return this.directorTecnicoRepository.equipo(id).patch(equipo, where);
   }
 
-  @del('/director-tecnicos/{id}/torneo', {
+  @del('/director-tecnicos/{id}/equipo', {
     responses: {
       '200': {
-        description: 'DirectorTecnico.Torneo DELETE success count',
+        description: 'DirectorTecnico.Equipo DELETE success count',
         content: {'application/json': {schema: CountSchema}},
       },
     },
   })
   async delete(
     @param.path.string('id') id: string,
-    @param.query.object('where', getWhereSchemaFor(Torneo)) where?: Where<Torneo>,
+    @param.query.object('where', getWhereSchemaFor(Equipo)) where?: Where<Equipo>,
   ): Promise<Count> {
-    return this.directorTecnicoRepository.torneo(id).delete(where);
+    return this.directorTecnicoRepository.equipo(id).delete(where);
   }
 }

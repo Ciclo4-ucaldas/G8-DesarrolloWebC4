@@ -16,12 +16,15 @@ import {Jugador} from '../models';
 import {JugadorRepository} from '../repositories';
 import {DirectorTecnicoController} from './director-tecnico.controller';
 
+@authenticate("tecnico")
 export class JugadorController {
   constructor(
     @repository(JugadorRepository)
     public jugadorRepository: JugadorRepository,
+
     @repository(DirectorTecnicoController)
     public tecnicoRepository: DirectorTecnicoController
+
 
   ) { }
 
