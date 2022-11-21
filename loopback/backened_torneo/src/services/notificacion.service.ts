@@ -5,8 +5,12 @@ const cryptoJS = require("crypto-js");
 const fetch = require('node-fetch');
 @injectable({scope: BindingScope.TRANSIENT})
 export class NotificacionService {
-  constructor(/* Add @inject to inject parameters */) { }
 
+  envi(destino: string, asunto: string, contenido: string) {
+    throw new Error('Method not implemented.');
+  }
+
+  constructor(/* Add @inject to inject parameters */) { }
   GenerarClave() {
     let clave = generador(8, false);
     return clave;
@@ -16,6 +20,7 @@ export class NotificacionService {
     let claveCifrada = cryptoJS.MD5(clave).toString();
     return claveCifrada;
   }
+
   notificarEmail(destino: string, asunto: string, contenido: string) {
     fetch(`${Llaves.urlServicioNotificaciones}/envio-correo?correo_destino= ${destino} &asunto= ${asunto} &contenido= ${contenido}`)
       .then((data: any) => {
@@ -23,7 +28,21 @@ export class NotificacionService {
       })
     return true;
   }
+
+
+  envioMensajeSMS(contenido: string, destino: string) {
+    let envio = true
+    fetch(Llaves.urlServicioNotificaciones + `sms?message=${contenido}&phone=${destino}`)
+      .then((result: any) => {
+        console.log(result)
+      }).catch((err: any) => {
+        console.log(err);
+        envio = false;
+      });
+    return envio;
+  }
   /*
-   * Add service methods here
-   */
+ * Add service methods here
+ */
+
 }

@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -26,6 +27,7 @@ export class ArbitroController {
     public arbitroRepository : ArbitroRepository,
   ) {}
 
+  @authenticate('tecnico','arbitro')
   @post('/arbitros')
   @response(200, {
     description: 'Arbitro model instance',
@@ -47,6 +49,7 @@ export class ArbitroController {
     return this.arbitroRepository.create(arbitro);
   }
 
+  @authenticate('tecnico','arbitro')
   @get('/arbitros/count')
   @response(200, {
     description: 'Arbitro model count',
@@ -58,6 +61,7 @@ export class ArbitroController {
     return this.arbitroRepository.count(where);
   }
 
+  @authenticate('tecnico')
   @get('/arbitros')
   @response(200, {
     description: 'Array of Arbitro model instances',
@@ -76,6 +80,7 @@ export class ArbitroController {
     return this.arbitroRepository.find(filter);
   }
 
+  @authenticate('tecnico')
   @patch('/arbitros')
   @response(200, {
     description: 'Arbitro PATCH success count',
@@ -95,6 +100,7 @@ export class ArbitroController {
     return this.arbitroRepository.updateAll(arbitro, where);
   }
 
+  @authenticate('tecnico')
   @get('/arbitros/{id}')
   @response(200, {
     description: 'Arbitro model instance',
@@ -111,6 +117,7 @@ export class ArbitroController {
     return this.arbitroRepository.findById(id, filter);
   }
 
+  @authenticate('tecnico')
   @patch('/arbitros/{id}')
   @response(204, {
     description: 'Arbitro PATCH success',
@@ -129,6 +136,7 @@ export class ArbitroController {
     await this.arbitroRepository.updateById(id, arbitro);
   }
 
+  @authenticate('tecnico')
   @put('/arbitros/{id}')
   @response(204, {
     description: 'Arbitro PUT success',
@@ -140,6 +148,7 @@ export class ArbitroController {
     await this.arbitroRepository.replaceById(id, arbitro);
   }
 
+  @authenticate('tecnico','arbitro')
   @del('/arbitros/{id}')
   @response(204, {
     description: 'Arbitro DELETE success',
