@@ -1,31 +1,31 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
   Filter,
   FilterExcludingWhere,
   repository,
-  Where,
+  Where
 } from '@loopback/repository';
 import {
-  post,
-  param,
-  get,
-  getModelSchemaRef,
-  patch,
-  put,
-  del,
-  requestBody,
-  response,
+  del, get,
+  getModelSchemaRef, param, patch, post, put, requestBody,
+  response
 } from '@loopback/rest';
 import {Jugador} from '../models';
 import {JugadorRepository} from '../repositories';
+import {DirectorTecnicoController} from './director-tecnico.controller';
 
 export class JugadorController {
   constructor(
     @repository(JugadorRepository)
-    public jugadorRepository : JugadorRepository,
-  ) {}
+    public jugadorRepository: JugadorRepository,
+    @repository(DirectorTecnicoController)
+    public tecnicoRepository: DirectorTecnicoController
 
+  ) { }
+
+  @authenticate('tecnico')
   @post('/jugadors')
   @response(200, {
     description: 'Jugador model instance',
@@ -47,6 +47,7 @@ export class JugadorController {
     return this.jugadorRepository.create(jugador);
   }
 
+  @authenticate('tecnico')
   @get('/jugadors/count')
   @response(200, {
     description: 'Jugador model count',
@@ -58,6 +59,7 @@ export class JugadorController {
     return this.jugadorRepository.count(where);
   }
 
+  @authenticate('tecnico')
   @get('/jugadors')
   @response(200, {
     description: 'Array of Jugador model instances',
@@ -76,6 +78,7 @@ export class JugadorController {
     return this.jugadorRepository.find(filter);
   }
 
+  @authenticate('tecnico', 'jugador')
   @patch('/jugadors')
   @response(200, {
     description: 'Jugador PATCH success count',
@@ -95,6 +98,7 @@ export class JugadorController {
     return this.jugadorRepository.updateAll(jugador, where);
   }
 
+  @authenticate('tecnico')
   @get('/jugadors/{id}')
   @response(200, {
     description: 'Jugador model instance',
@@ -111,6 +115,7 @@ export class JugadorController {
     return this.jugadorRepository.findById(id, filter);
   }
 
+  @authenticate('tecnico')
   @patch('/jugadors/{id}')
   @response(204, {
     description: 'Jugador PATCH success',
@@ -129,6 +134,7 @@ export class JugadorController {
     await this.jugadorRepository.updateById(id, jugador);
   }
 
+  @authenticate('tecnico')
   @put('/jugadors/{id}')
   @response(204, {
     description: 'Jugador PUT success',
@@ -140,6 +146,7 @@ export class JugadorController {
     await this.jugadorRepository.replaceById(id, jugador);
   }
 
+  @authenticate('tecnico')
   @del('/jugadors/{id}')
   @response(204, {
     description: 'Jugador DELETE success',
