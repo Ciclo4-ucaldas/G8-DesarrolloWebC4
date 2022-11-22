@@ -10,59 +10,27 @@ import {
 import {
   del,
   get,
-  getModelSchemaRef, HttpErrors, param, patch, post, put, requestBody,  patch,
+  getModelSchemaRef, param,
+  patch,
   post,
   put,
   requestBody,
   response
 } from '@loopback/rest';
-import {Llaves} from '../config/llaves';
-import {Credenciales, DirectorTecnico} from '../models';
 import {DirectorTecnico} from '../models';
 import {DirectorTecnicoRepository} from '../repositories';
 import {NotificacionService} from '../services';
-const fetch = require('node-fetch');
+
 
 export class DirectorTecnicoController {
 
   constructor(
     @repository(DirectorTecnicoRepository)
     public directorTecnicoRepository: DirectorTecnicoRepository,
-    @service(AutentificacionService)
-    public servicioAutenticacion: AutentificacionService,
     @service(NotificacionService)
     public servicioNotificacion: NotificacionService
-
-  ) { }
-  @post('/IdentificarDirectorTecnico', {
-    responses: {
-      '200': {
-        description: "Identificación de Usuarios"
-
-      }
-    }
-  })
-  async IdentificarDirectorTecnico(
-    @requestBody() credenciales: Credenciales
   ) {
-    let d = await this.servicioAutenticacion.IdentificarDirectorTecnico(credenciales.usuario, credenciales.clave)
-    if (d) {
-      ;
-      let token = this.servicioAutenticacion.GenerarTokenJWT(d);
-      return {
-        datos: {
-          id: d.id,
-          nombre: d.Nombres,
-          correo: d.Correo
-
-        },
-        tk: token
-      }
-    } else {
-      throw new HttpErrors[401]("Datos invalidos");
-    }
-
-  
+  }
 
   @post('/director-tecnicos')
   @response(200, {
@@ -81,9 +49,7 @@ export class DirectorTecnicoController {
       },
     })
     directorTecnico: Omit<DirectorTecnico, 'id'>,
-
-  ): Promise<DirectorTecnico | any> {
-
+  ): Promise<DirectorTecnico> {
 
     let clave = this.servicioNotificacion.GenerarClave();
     let claveCifrada = this.servicioNotificacion.cifrarClave(clave);
@@ -91,27 +57,8 @@ export class DirectorTecnicoController {
     let d = await this.directorTecnicoRepository.create(directorTecnico);
     return d;
 
-
-    //Notificar al usuario
-    const destino = directorTecnico.Correo;
-    const asunto = 'Registro en la plataforma';
-    const contenido = `Hola ${directorTecnico.Nombres}, su nombre de usuario es: ${directorTecnico.Correo} y su contraseña es: ${clave}`;
-    fetch(`${Llaves.urlServicioNotificaciones}/envio-correo?correo_destino=${destino}&asunto=${asunto}&contenido=${contenido}`)
-      .then((data: any) => {
-        console.log(data);
-      })
-    //    let contenido="prueba"
-    let mensajeSMS = await this.servicioNotificacion.envioMensajeSMS(directorTecnico.Telefono, contenido);
-    let mensajeEmail = await this.servicioNotificacion.notificarEmail(destino, asunto, contenido);
-
-    // return mensaje;
-    if (mensajeSMS && mensajeEmail) {
-      return directorTecnico;
-    } else {
-      return new HttpErrors[400]("No se pudo mandar el correo al crear el Admin")
-    }
-
   }
+
   @get('/director-tecnicos/count')
   @response(200, {
     description: 'DirectorTecnico model count',
